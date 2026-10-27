@@ -1,259 +1,441 @@
-<div id="cardPopup" class="popup-overlay">
-  <div class="popup-card">
-    <button class="popup-close" onclick="closeCardPopup()" aria-label="Close">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-      </svg>
-    </button>
-
-    <div class="popup-badge">Upcoming Event</div>
-
-    <h2 class="popup-title">Registration is Ongoing</h2>
-    <p class="popup-subtitle">
-      Rise Up Patriots Conference 3.0<br>
-      </p>
-
-    <div class="popup-image">
-      <img src="banner.png" alt="Registration Ongoing">
-    </div>
-
-    <div class="popup-actions">
-      <a href="/Register" class="btn-apply">Register Now</a>
-      <button class="btn-close" onclick="closeCardPopup()">Maybe Later</button>
-    </div>
-
-    <label class="popup-dont-show">
-      <input type="checkbox" id="dontShowAgain">
-      Don’t show this again
-    </label>
-  </div>
-</div>
-
-<style>
-  .popup-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.65);
-    backdrop-filter: blur(6px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    padding: 24px 16px;           
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.2s ease;
-  }
-
-  .popup-overlay.active {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .popup-card {
-    background: #b2fcd9;
-    border-radius: 20px;
-    max-width: 440px;
-    width: 100%;
-    padding: 28px 28px 26px;
-    position: relative;
-    box-shadow: 0 25px 50px -12px rgba(1, 86, 28, 0.28);
-    transform: translateY(20px) scale(0.97);
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    text-align: center;
-  }
-
-  .popup-overlay.active .popup-card {
-    transform: translateY(0) scale(1);
-  }
-
-  .popup-close {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: none;
-    background: rgba(1, 56, 29, 0.08);
-    color: #01381d;
-    cursor: pointer;
-    display: grid;
-    place-items: center;
-    transition: background 0.2s, color 0.2s, transform 0.15s;
-  }
-
-  .popup-close:hover {
-    background: rgba(1, 56, 29, 0.15);
-    color: #01381d;
-    transform: scale(1.05);
-  }
-
-  .popup-badge {
-    display: inline-block;
-    background: rgba(1, 56, 29, 0.12);
-    color: #01381d;
-    font-size: 12px;
-    font-weight: 700;
-    font-style: italic;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    padding: 6px 14px;
-    border-radius: 999px;
-    margin-bottom: 16px;
-  }
-
-  .popup-title {
-    font-size: 1.65rem;
-    font-weight: 700;
-    font-style: italic;
-    color: #01381d;
-    margin: 0 0 12px;
-    line-height: 1.25;
-  }
-
-  .popup-subtitle {
-    font-size: 18px;
-    color: #01381d;
-    font-style:italic;
-    line-height: 1.55;
-    margin: 0 0 22px;
-  }
-
-  .popup-image {
-    border-radius: 14px;
-    overflow: hidden;
-    margin-bottom: 24px;
-    border: 1px solid #0e5128;
-  }
-
-  .popup-image img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  .popup-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 18px;
-  }
-
-  .btn-apply {
-    display: block;
-    background: #034929;
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 15.5px;
-    padding: 15px 22px;
-    border-radius: 12px;
-    border: none;
-    transition: background 0.22s ease, transform 0.18s ease, box-shadow 0.22s ease;
-    box-shadow: 0 4px 12px rgba(3, 73, 41, 0.25);
-  }
-
-  .btn-apply:hover {
-    background: #02663a;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(3, 73, 41, 0.35);
-    color: #ffffff;
-  }
-
-  /* Secondary button */
-  .btn-close {
-    background: transparent;
-    border: 1.5px solid #01381d;
-    color: #01381d;
-    font-weight: 550;
-    font-size: 14.5px;
-    padding: 13px 22px;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: background 0.22s ease, color 0.22s ease, transform 0.18s ease;
-  }
-
-  .btn-close:hover {
-    background: #01381d;
-    color: #b2fcd9;
-    transform: translateY(-1px);
-  }
-
-  .popup-dont-show {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    font-size: 13px;
-    color: #01381d;
-    cursor: pointer;
-    user-select: none;
-  }
-
-  .popup-dont-show input {
-    width: 15px;
-    height: 15px;
-    accent-color: #1dd89a;
-    cursor: pointer;
-  }
-
-  @media (min-width: 481px) {
-    .popup-overlay {
-      padding: 48px 24px;       
-    }
-  }
-
-  @media (max-width: 480px) {
-    .popup-overlay {
-      padding: 12px 10px;      
-      align-items: flex-end;    
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rise Up Patriots Conference - Registration Ongoing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* Scoped font-family and rendering for popup */
+    .popup-overlay,
+    .popup-overlay * {
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
+    /* Modal Overlay Backdrop */
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 18, 10, 0.72);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      padding: 16px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+
+    .popup-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Modal Card - Natural, Architectural Proportions (matches URNI site) */
     .popup-card {
-      max-width: 100%;
+      background: #ffffff;
+      border-radius: 10px;
+      border: 1px solid #dbe7df;
+      max-width: 450px;
       width: 100%;
-      padding: 32px 22px 28px;
-      border-radius: 22px 22px 0 0; 
-      margin-bottom: 0;
+      position: relative;
+      box-shadow: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.05),
+        0 20px 45px -10px rgba(5, 38, 20, 0.28);
+      transform: translateY(12px) scale(0.98);
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+                  opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+      text-align: left;
     }
 
+    .popup-overlay.active .popup-card {
+      transform: translateY(0) scale(1);
+    }
+
+    /* Content Body */
+    .popup-body {
+      padding: 24px 24px 22px;
+    }
+
+    /* Top Row: Meta Badge & Close Button */
+    .popup-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    /* Clean News / Announcement Meta Badge */
+    .popup-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #edf7f1;
+      color: #0b5e37;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 5px;
+      border: 1px solid #cce8d7;
+    }
+
+    .popup-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #008751;
+    }
+
+    /* Close Button */
+    .popup-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      border: 1px solid #e1ebe5;
+      background: #ffffff;
+      color: #4b6354;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: background 0.18s, color 0.18s, border-color 0.18s;
+      flex-shrink: 0;
+      padding: 0;
+    }
+
+    .popup-close:hover {
+      background: #f1f7f3;
+      color: #0b5e37;
+      border-color: #b8d9c4;
+    }
+
+    /* Title & Subtitle */
     .popup-title {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #083c22;
+      margin: 0 0 6px;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
     }
 
     .popup-subtitle {
-      font-size: 14px;
+      font-size: 13.5px;
+      color: #4f6859;
+      font-weight: 500;
+      line-height: 1.45;
+      margin: 0 0 16px;
     }
 
+    /* Event Banner Showcase */
+    .popup-image-wrap {
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      background: #f2f7f4;
+      border: 1px solid #d8e6dd;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      aspect-ratio: 16 / 9;
+    }
+
+    .popup-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Event Quick Metadata */
+    .popup-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 20px;
+    }
+
+    .meta-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 9px;
+      background: #f5faf7;
+      border: 1px solid #dcebe1;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #124d2e;
+    }
+
+    .meta-item svg {
+      color: #008751;
+      flex-shrink: 0;
+    }
+
+    /* Action Buttons */
+    .popup-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin-bottom: 16px;
+    }
+
+    /* Primary Button - URNI Official Green */
     .btn-apply {
-      padding: 16px 20px;
-      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #0b5e37;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14.5px;
+      padding: 12px 20px;
+      border-radius: 7px;
+      border: 1px solid #08492b;
+      cursor: pointer;
+      transition: background 0.18s ease, transform 0.15s ease, box-shadow 0.18s ease;
+      box-shadow: 0 2px 6px rgba(11, 94, 55, 0.25);
     }
-  }
-</style>
 
-<script>
-  function showCardPopup() {
-    if (localStorage.getItem('hideCardPopup') === 'true') return;
-    const popup = document.getElementById('cardPopup');
-    popup.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeCardPopup() {
-    const popup = document.getElementById('cardPopup');
-    const dontShow = document.getElementById('dontShowAgain');
-    if (dontShow && dontShow.checked) {
-      localStorage.setItem('hideCardPopup', 'true');
+    .btn-apply:hover {
+      background: #08492b;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(11, 94, 55, 0.35);
+      transform: translateY(-1px);
     }
-    popup.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-  document.getElementById('cardPopup').addEventListener('click', function(e) {
-    if (e.target === this) closeardPopup();
-  });
-  window.addEventListener('load', function() {
-    setTimeout(showCardPopup, 800);
-  });
-</script>
+
+    .btn-apply:active {
+      transform: translateY(0);
+    }
+
+    .btn-apply svg {
+      transition: transform 0.18s ease;
+    }
+
+    .btn-apply:hover svg {
+      transform: translateX(3px);
+    }
+
+    /* Secondary Button - Subtle Outline */
+    .btn-close {
+      background: transparent;
+      border: 1px solid #cadcd1;
+      color: #2b4f3b;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 13.5px;
+      padding: 10px 18px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+      text-align: center;
+    }
+
+    .btn-close:hover {
+      background: #f4f9f6;
+      border-color: #b0d1bd;
+      color: #093c22;
+    }
+
+    /* Don't Show Again */
+    .popup-dont-show {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      font-size: 12.5px;
+      color: #5d7567;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.18s;
+    }
+
+    .popup-dont-show:hover {
+      color: #124d2e;
+    }
+
+    .popup-dont-show input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 15px;
+      height: 15px;
+      border: 1.5px solid #a3c4b1;
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+      display: grid;
+      place-content: center;
+      background: #ffffff;
+      margin: 0;
+      transition: all 0.18s ease;
+    }
+
+    .popup-dont-show input[type="checkbox"]:hover {
+      border-color: #008751;
+    }
+
+    .popup-dont-show input[type="checkbox"]:checked {
+      background-color: #008751;
+      border-color: #008751;
+    }
+
+    .popup-dont-show input[type="checkbox"]:checked::before {
+      content: "";
+      width: 8px;
+      height: 4px;
+      border-left: 2px solid #ffffff;
+      border-bottom: 2px solid #ffffff;
+      transform: rotate(-45deg) translate(1px, -1px);
+    }
+
+    /* Mobile */
+    @media (max-width: 480px) {
+      .popup-card {
+        max-width: 100%;
+        border-radius: 8px;
+      }
+
+      .popup-body {
+        padding: 20px 18px;
+      }
+
+      .popup-title {
+        font-size: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Modal Popup Component -->
+  <div id="cardPopup" class="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="popupTitle">
+    <div class="popup-card">
+      <div class="popup-body">
+        <!-- Top Bar -->
+        <div class="popup-header">
+          <div class="popup-badge">
+            <span class="popup-badge-dot"></span>
+            Upcoming Event
+          </div>
+
+          <button class="popup-close" onclick="closeCardPopup()" aria-label="Close Announcement">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Heading -->
+        <h2 id="popupTitle" class="popup-title">Registration is Ongoing</h2>
+        <p class="popup-subtitle">Rise Up Patriots Conference 3.0 </p>
+
+        <!-- Banner Image -->
+        <div class="popup-image-wrap">
+          <img src="banner.png" alt="Rise Up Patriots Conference 3.0">
+        </div>
+
+        <!-- Event Details Chips -->
+        <div class="popup-meta-row">
+          <span class="meta-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            Oct 25, 2025
+          </span>
+          <span class="meta-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            10:00 AM
+          </span>
+          <span class="meta-item">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            Abuja, Nigeria
+          </span>
+        </div>
+
+        <!-- Actions -->
+        <div class="popup-actions">
+          <a href="/Register" class="btn-apply">
+            <span>Register Now</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+          <button type="button" class="btn-close" onclick="closeCardPopup()">Maybe Later</button>
+        </div>
+
+        <!-- Don't Show Again -->
+        <label class="popup-dont-show">
+          <input type="checkbox" id="dontShowAgain">
+          <span>Don’t show this again</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showCardPopup() {
+      if (localStorage.getItem('hideCardPopup') === 'true') return;
+      const popup = document.getElementById('cardPopup');
+      if (popup) {
+        popup.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeCardPopup() {
+      const popup = document.getElementById('cardPopup');
+      const dontShow = document.getElementById('dontShowAgain');
+      if (dontShow && dontShow.checked) {
+        localStorage.setItem('hideCardPopup', 'true');
+      }
+      if (popup) {
+        popup.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    // Dismiss on backdrop click
+    document.getElementById('cardPopup').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeCardPopup();
+      }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeCardPopup();
+      }
+    });
+
+    // Immediately trigger when homepage renders
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', showCardPopup);
+    } else {
+      showCardPopup();
+    }
+  </script>
+</body>
+</html>
